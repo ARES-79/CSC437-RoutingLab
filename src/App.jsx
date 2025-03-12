@@ -6,27 +6,41 @@ import { Routes, Route } from "react-router";
 import { useImageFetching } from "./images/useImageFetching.js";
 import { useState } from "react";
 import { MainLayout } from "./MainLayout.jsx";
+import { RegisterPage } from "./auth/RegisterPage.jsx";
+import { LoginPage } from "./auth/LoginPage.jsx";
+import { ProtectedRoute } from "./ProtectedRoute.jsx";
 
 function App() {
-    const [userName, setUsername] = useState("John Doe");
-    const { isLoading, fetchedImages } = useImageFetching("");
-    // const POSSIBLE_PAGES = [
-    //     <Homepage userName="John Doe" />,
-    //     <AccountSettings />,
-    //     <ImageGallery />,
-    //     <ImageDetails imageId="0" />
-    // ]
-    const POSSIBLE_ROUTES =
+  const [userName, setUsername] = useState("John Doe");
+  const [authToken, setAuthToken] = useState("");
+  const { isLoading, fetchedImages } = useImageFetching("", authToken);
+
+  const POSSIBLE_ROUTES =
     <Routes>
-      <Route path="/" element={<MainLayout/>} >
-        <Route path="/" element={<Homepage userName={userName} />} />
-        <Route path="/account" element={<AccountSettings handleUserNameChange={setUsername} />} />
-        <Route path="/images" element={<ImageGallery isLoading={isLoading} fetchedImages={fetchedImages}/>} />
-        <Route path="/images/:imageId" element={<ImageDetails />} />
+      <Route path="/" element={<MainLayout />} >
+        <Route path="/" element={
+          <ProtectedRoute authToken={authToken} >
+            <Homepage userName={userName} />
+          </ProtectedRoute>} />
+        <Route path="/account" element={
+          <ProtectedRoute authToken={authToken} >
+            <AccountSettings handleUserNameChange={setUsername} />
+          </ProtectedRoute>} />
+        <Route path="/images" element={
+          <ProtectedRoute authToken={authToken} >
+            <ImageGallery isLoading={isLoading} fetchedImages={fetchedImages} />
+          </ProtectedRoute>
+        } />
+        <Route path="/images/:imageId" element={
+          <ProtectedRoute authToken={authToken} >
+            <ImageDetails authToken={authToken} />
+          </ProtectedRoute>} />
+        <Route path="/register" element={<RegisterPage onValidRegister={setAuthToken} />} />
+        <Route path="/login" element={<LoginPage onValidLogin={setAuthToken} />} />
       </Route>
     </Routes>
 
-    return POSSIBLE_ROUTES;
+  return POSSIBLE_ROUTES;
 }
 
 export default App
