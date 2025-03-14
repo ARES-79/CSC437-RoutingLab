@@ -11,7 +11,7 @@ export function ImageUploadForm({ authToken }) {
             const image = formData.get("image");
             const imageName = formData.get("name");
 
-            if (!imageName || !image) {
+            if (!imageName || !image.name) {
                 return {
                     type: "error",
                     message: `Please fill in the image name and upload an image.`,
@@ -27,7 +27,6 @@ export function ImageUploadForm({ authToken }) {
                     }
                 });
                 if (!response.ok) {
-                    setImgSrc(null);
                     return {
                         type: "error",
                         message: `${response.status}: Error submitting the image.`,
@@ -37,6 +36,7 @@ export function ImageUploadForm({ authToken }) {
                 console.error(error);
                 // Return an error message...
             }
+            setImgSrc(null);
         },
         null
     );
