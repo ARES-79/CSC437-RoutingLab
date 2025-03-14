@@ -19,18 +19,6 @@ export function UsernamePasswordForm(props) {
 
             const submitResult = await props.onSubmit( username, password );
             return submitResult;
-            // console.log(submitResult.status);
-            // if (submitResult.status == 400 || submitResult.status == 401 || submitResult.status == 500 ){
-            //     return {
-            //         type: "error",
-            //         message: submitResult.body.message,
-            //     };
-            // }
-
-            // return {
-            //     type: "success",
-            //     message: `You have succesfully subscribed!`,
-            // };
         },
         null
     );

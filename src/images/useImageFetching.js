@@ -42,7 +42,8 @@ export function useImageFetching(imageId, authToken, delay = 1000) {
     useEffect(() => {
         const fetchImages = async () => {
             try {
-                const response = await fetch('/api/images', {
+                const url = imageId ? `/api/images/${imageId}` : '/api/images';
+                const response = await fetch(url, {
                     method: 'GET', // Optional, since GET is default
                     headers: {
                         'Authorization': `Bearer ${authToken}`, // Replace with your actual token
@@ -50,7 +51,8 @@ export function useImageFetching(imageId, authToken, delay = 1000) {
                     }
                 });
                 if (!response.ok) {
-                    throw new Error(`HTTP error! Status: ${response.status}`);
+                    console.error(`HTTP error! Status: ${response.status}`);
+                    return;
                 }
                 const data = await response.json(); // Parse JSON data
                 setFetchedImages(data); // Update state with fetched data
