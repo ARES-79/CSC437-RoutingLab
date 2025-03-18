@@ -11,14 +11,15 @@ export function ImageEditForm() {
             const request = await fetch(`/api/images/${imageId}`, {
                 method: "PATCH",
                 headers: {
-                  "Content-Type": "application/json",
+                    'Authorization': `Bearer ${authToken}`,
+                    "Content-Type": "application/json",
                 },
                 body: JSON.stringify({ name: imageName })
-              });
+            });
         } catch (error) {
             console.error(`Could not get update image name: ${error}`);
             throw error;
-        } 
+        }
         setImageId("");
         setImageName("");
         setIsLoading(false);
@@ -29,17 +30,17 @@ export function ImageEditForm() {
             <label style={{ display: "block" }}>
                 Image ID
                 <input
-                        value={imageId}
-                        disabled={isLoading}
-                        onChange={(e) => setImageId(e.target.value)}
+                    value={imageId}
+                    disabled={isLoading}
+                    onChange={(e) => setImageId(e.target.value)}
                 />
             </label>
             <label style={{ display: "block" }}>
                 New image name
                 <input
-                        value={imageName}
-                        disabled={isLoading}
-                        onChange={(e) => setImageName(e.target.value)}
+                    value={imageName}
+                    disabled={isLoading}
+                    onChange={(e) => setImageName(e.target.value)}
                 />
             </label>
             <button disabled={isLoading} onClick={handleSubmit}>Send request</button>

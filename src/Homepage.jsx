@@ -7,7 +7,7 @@ export function Homepage(props) {
             <h2>Welcome, {props.userName}</h2>
             <p>This is the content of the home page.</p>
 
-            <ImageEditForm/>
+            <ImageEditForm authToken={props.authToken}/>
         </>
     );
 }

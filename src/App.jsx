@@ -20,7 +20,7 @@ function App() {
       <Route path="/" element={<MainLayout />} >
         <Route path="/" element={
           <ProtectedRoute authToken={authToken} >
-            <Homepage userName={userName} />
+            <Homepage userName={userName} authToken={authToken}/>
           </ProtectedRoute>} />
         <Route path="/account" element={
           <ProtectedRoute authToken={authToken} >
