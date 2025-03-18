@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export function ImageEditForm() {
+export function ImageEditForm({authToken}) {
     const [imageId, setImageId] = useState("");
     const [imageName, setImageName] = useState("");
     const [isLoading, setIsLoading] = useState(false);
